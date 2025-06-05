@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+    --font-primary: 'Soage', serif;
+    
+    --color-primary: oklch(0.86 0.19 85.2);
+    --color-secondary: oklch(0.63 0.12 145.8);
+    --color-textc: oklch(0.39 0.06 33.2);
+    --color-bgc: oklch(0.94 0.03 102.5);
+    --color-contrast: oklch(0.84 0.11 226.7);
+}
+
+@font-face {
+    font-family: Soage;
+    src: url('./assets/fonts/Soage.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* 
+.font-primary {
+    font-family: var(--font-primary);
+} */
