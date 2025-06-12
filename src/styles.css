@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
     --font-primary: 'Soage', serif;
+    --font-secondary: 'Lexend Giga', sans-serif;
     
     --color-primary: oklch(0.86 0.19 85.2);
     --color-secondary: oklch(0.63 0.12 145.8);
@@ -17,6 +19,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 /* 
 .font-primary {
     font-family: var(--font-primary);
