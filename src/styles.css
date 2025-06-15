@@ -5,11 +5,17 @@
     --font-primary: 'Soage', serif;
     --font-secondary: 'Lexend Giga', sans-serif;
     
-    --color-primary: oklch(0.86 0.19 85.2);
-    --color-secondary: oklch(0.63 0.12 145.8);
-    --color-textc: oklch(0.39 0.06 33.2);
-    --color-bgc: oklch(0.94 0.03 102.5);
-    --color-contrast: oklch(0.84 0.11 226.7);
+    --color-primary: oklch(0.82 0.14 85.0);
+    --color-secondary: oklch(0.72 0.10 140.0);
+    --color-textc: oklch(0.45 0.05 35.0);
+    --color-surface: oklch(0.95 0.02 100.0);
+    --color-accent: oklch(0.87 0.07 220.0);
+
+    --color-dprimary: oklch(0.75 0.13 85.0);
+    --color-dsecondary: oklch(0.60 0.08 140.0);
+    --color-dtextc: oklch(0.91 0.02 75.0);
+    --color-dsurface: oklch(0.28 0.03 35.0);
+    --color-daccent: oklch(0.78 0.06 220.0);
 }
 
 @font-face {
