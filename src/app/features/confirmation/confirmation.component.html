@@ -20,18 +20,18 @@
 
                             <div class="flex flex-row gap-4">
                                 <div class="mb-4 flex-auto">
-                                    <label class="block text-sm font-secondary text-dsecondary mb-1">Nome</label>
+                                    <label class="block text-sm font-secondary text-dsurface mb-1">Nome</label>
                                     <input type="text" 
                                         formControlName="name" 
-                                        class="w-full px-3 py-2 border border-dsecondary/20 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary">
+                                        class="w-full px-3 py-2 border border-dsurface/30 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary">
                                 </div>
                                 
                                 <ng-container *ngIf="guest.get('isChild')?.value">
                                     <div class="mb-4">
-                                        <label class="block text-sm font-secondary text-dsecondary mb-1">Idade</label>
+                                        <label class="block text-sm font-secondary text-dsurface mb-1">Idade</label>
                                         <input type="number" 
                                             formControlName="age" 
-                                            class="w-full px-3 py-2 border border-dsecondary/20 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary"
+                                            class="w-full px-3 py-2 border border-dsurface/30 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary"
                                             min="0" 
                                             max="12">
                                     </div>
@@ -40,8 +40,22 @@
                             </div>
                             
                             <div class="flex items-center space-x-2">
-                                <button class="w-full px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 rounded-full border border-gray-200">Yes</button>
-                                <button class="w-full px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 rounded-full border border-gray-200">No</button>
+                                <button 
+                                    type="button"
+                                    (click)="updateGuestConfirmation(i, true)"
+                                    [class]="guest.get('confirmed')?.value === true ? 'bg-green-500/40 text-dsurface/100' : ''"
+                                    class="w-full px-4 py-2 text-sm font-secondary font-semibold text-dsurface/70 rounded-full border transition-colors duration-200"
+                                    [disabled]="isDeadlinePassed()">
+                                    Sim
+                                </button>
+                                <button 
+                                    type="button"
+                                    (click)="updateGuestConfirmation(i, false)"
+                                    [class]="guest.get('confirmed')?.value === false ? 'bg-red-500/40 text-dsurface/100' : ''"
+                                    class="w-full px-4 py-2 text-sm font-semibold text-dsurface/70 rounded-full border transition-colors duration-200"
+                                    [disabled]="isDeadlinePassed()">
+                                    Não
+                                </button>
                             </div>
 
                             <hr 

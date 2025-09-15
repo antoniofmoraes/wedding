@@ -42,6 +42,13 @@ export class ConfirmationComponent implements OnInit {
     return this.confirmationForm.get('guests') as FormArray;
   }
 
+  updateGuestConfirmation(index: number, confirmed: boolean) {
+    if (this.isDeadlinePassed()) return;
+    
+    const guest = this.guests.at(index);
+    guest.patchValue({ confirmed });
+  }
+
   private loadFamilyData() {
     // TODO: API call
     const mockData: GuestInfo[] = [
