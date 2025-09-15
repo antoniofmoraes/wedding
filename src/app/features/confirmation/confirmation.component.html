@@ -1,0 +1,62 @@
+<div class="min-h-screen flex flex-col bg-surface">
+    <app-header />
+    <main class="flex-1 flex items-center justify-center pt-24">
+        <div class="max-w-6xl mx-auto p-6 bg-surface">
+            <h1 class="text-3xl font-secondary text-dsurface text-center mb-8">Confirmação de Presença</h1>
+            
+            <ng-container *ngIf="isDeadlinePassed(); else confirmationFormTemplate">
+                <p class="text-red-500 text-sm mt-2 text-center">
+                    O prazo para confirmação de presença expirou.
+                </p>
+            </ng-container>
+            
+            <ng-template #confirmationFormTemplate>
+                <form [formGroup]="confirmationForm" (ngSubmit)="onSubmit()">
+                    <div formArrayName="guests">
+                        <div *ngFor="let guest of guests.controls; let i = index; let last = last" 
+                             [formGroupName]="i" 
+                             class="mb-6 p-4 rounded-lg bg-black/10">
+                            
+
+                            <div class="flex flex-row gap-4">
+                                <div class="mb-4 flex-auto">
+                                    <label class="block text-sm font-secondary text-dsecondary mb-1">Nome</label>
+                                    <input type="text" 
+                                        formControlName="name" 
+                                        class="w-full px-3 py-2 border border-dsecondary/20 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary">
+                                </div>
+                                
+                                <ng-container *ngIf="guest.get('isChild')?.value">
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-secondary text-dsecondary mb-1">Idade</label>
+                                        <input type="number" 
+                                            formControlName="age" 
+                                            class="w-full px-3 py-2 border border-dsecondary/20 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary"
+                                            min="0" 
+                                            max="12">
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <button class="w-full px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 rounded-full border border-gray-200">Yes</button>
+                                <button class="w-full px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 rounded-full border border-gray-200">No</button>
+                            </div>
+
+                            <hr 
+                                *ngIf="!last"
+                                class="border-t-2 border-black my-4 hidden">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-dprimary text-white font-secondary py-2 px-4 rounded-md hover:bg-dprimary/90 transition-colors duration-200 disabled:bg-dsecondary/50 disabled:cursor-not-allowed"
+                            [disabled]="!confirmationForm.valid || !isFormEnabled">
+                        Confirmar
+                    </button>
+                </form>
+            </ng-template>
+        </div>
+    </main>
+</div>
