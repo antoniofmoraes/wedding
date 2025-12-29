@@ -23,6 +23,13 @@ export class ConfirmationComponent implements OnInit {
   confirmationForm: FormGroup;
   isFormEnabled: boolean = true;
   deadlineDate = new Date('2025-10-31');
+  isLoading = false;
+  loadError: string | null = null;
+  submitError: string | null = null;
+  submitSuccess: boolean = false;
+
+  // Base URL of the API (adjust if needed or move to environment file)
+  private readonly apiBase = 'http://xsco44swgggs4csckkk04g0w.69.62.91.165.sslip.io:3003';
 
   constructor(
     private route: ActivatedRoute,
@@ -49,29 +56,77 @@ export class ConfirmationComponent implements OnInit {
     guest.patchValue({ confirmed });
   }
 
-  private loadFamilyData() {
-    // TODO: API call
-    const mockData: GuestInfo[] = [
-      { name: 'John Doe', isChild: false, confirmed: false },
-      { name: 'Jane Doe', isChild: false, confirmed: false },
-      { name: 'Billy Doe', isChild: true, age: 8, confirmed: false }
-    ];
-
-    mockData.forEach(guest => {
-      const guestGroup = this.fb.group({
-        name: [guest.name],
-        isChild: [guest.isChild],
-        age: [guest.age],
-        confirmed: [guest.confirmed]
+  private async loadFamilyData(): Promise<void> {
+    this.isLoading = true;
+    this.loadError = null;
+    try {
+      // Assumed endpoint pattern. Adjust to match real API once confirmed.
+      const url = `${this.apiBase}/confirmation/${encodeURIComponent(this.token)}`;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
       });
-      this.guests.push(guestGroup);
-    });
+      if (!res.ok) {
+        throw new Error(`Erro ao carregar dados (status ${res.status})`);
+      }
+      const data = await res.json();
+      // Expecting shape: { guests: [{ name, isChild, age?, confirmed? }] }
+      const guests: GuestInfo[] = Array.isArray(data?.guests) ? data.guests : [];
+      if (!guests.length) {
+        this.loadError = 'Nenhum convidado encontrado para este token.';
+      }
+      guests.forEach(guest => {
+        const guestGroup = this.fb.group({
+          name: [guest.name],
+          isChild: [guest.isChild],
+          age: [guest.age],
+          confirmed: [guest.confirmed ?? false]
+        });
+        this.guests.push(guestGroup);
+      });
+    } catch (err: any) {
+      console.error(err);
+      this.loadError = err?.message || 'Erro inesperado ao carregar.';
+    } finally {
+      this.isLoading = false;
+    }
   }
 
-  onSubmit() {
-    if (this.confirmationForm.valid) {
-      console.log(this.confirmationForm.value);
-      // TODO: POST to api
+  async onSubmit() {
+    if (!this.confirmationForm.valid || this.isDeadlinePassed()) return;
+    this.submitError = null;
+    this.submitSuccess = false;
+    try {
+      const payload = {
+        token: this.token,
+        guests: this.guests.value.map((g: any) => ({
+          name: g.name,
+          confirmed: g.confirmed,
+          isChild: g.isChild,
+          age: g.age
+        }))
+      };
+      const url = `${this.apiBase}/confirmation/${encodeURIComponent(this.token)}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Falha ao enviar confirmações (status ${res.status}): ${text}`);
+      }
+      this.submitSuccess = true;
+      // Optionally disable form after success
+      this.isFormEnabled = false;
+    } catch (err: any) {
+      console.error(err);
+      this.submitError = err?.message || 'Erro inesperado ao enviar.';
     }
   }
 

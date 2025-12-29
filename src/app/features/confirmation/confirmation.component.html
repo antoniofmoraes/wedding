@@ -11,11 +11,16 @@
             </ng-container>
             
             <ng-template #confirmationFormTemplate>
+                <div *ngIf="isLoading" class="text-center text-sm text-dsurface mb-4 animate-pulse">Carregando convidados...</div>
+                <div *ngIf="loadError" class="text-center text-sm text-red-600 mb-4">{{ loadError }}</div>
+                <div *ngIf="submitSuccess" class="text-center text-sm text-green-600 mb-4">Confirmações enviadas com sucesso!</div>
+                <div *ngIf="submitError" class="text-center text-sm text-red-600 mb-4">{{ submitError }}</div>
                 <form [formGroup]="confirmationForm" (ngSubmit)="onSubmit()">
                     <div formArrayName="guests">
-                        <div *ngFor="let guest of guests.controls; let i = index; let last = last" 
-                             [formGroupName]="i" 
-                             class="mb-6 p-4 rounded-lg bg-black/10">
+                    <div *ngFor="let guest of guests.controls; let i = index; let last = last" 
+                        [formGroupName]="i" 
+                        class="mb-6 p-4 rounded-lg bg-black/5"
+                        [class.opacity-50]="isLoading || submitSuccess">
                             
 
                             <div class="flex flex-row gap-4">
@@ -23,7 +28,8 @@
                                     <label class="block text-sm font-secondary text-dsurface mb-1">Nome</label>
                                     <input type="text" 
                                         formControlName="name" 
-                                        class="w-full px-3 py-2 border border-dsurface/30 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary">
+                                        [disabled]="isLoading || submitSuccess" 
+                                        class="w-full px-3 py-2 border border-dsurface/30 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary disabled:bg-surface/50">
                                 </div>
                                 
                                 <ng-container *ngIf="guest.get('isChild')?.value">
@@ -31,7 +37,8 @@
                                         <label class="block text-sm font-secondary text-dsurface mb-1">Idade</label>
                                         <input type="number" 
                                             formControlName="age" 
-                                            class="w-full px-3 py-2 border border-dsurface/30 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary"
+                                            [disabled]="isLoading || submitSuccess" 
+                                            class="w-full px-3 py-2 border border-dsurface/30 rounded-md focus:outline-none focus:ring-2 focus:ring-dprimary disabled:bg-surface/50"
                                             min="0" 
                                             max="12">
                                     </div>
@@ -45,7 +52,7 @@
                                     (click)="updateGuestConfirmation(i, true)"
                                     [class]="guest.get('confirmed')?.value === true ? 'bg-green-500/40 text-dsurface/100' : ''"
                                     class="w-full px-4 py-2 text-sm font-secondary font-semibold text-dsurface/70 rounded-full border transition-colors duration-200"
-                                    [disabled]="isDeadlinePassed()">
+                                    [disabled]="isDeadlinePassed() || isLoading || submitSuccess">
                                     Sim
                                 </button>
                                 <button 
@@ -53,7 +60,7 @@
                                     (click)="updateGuestConfirmation(i, false)"
                                     [class]="guest.get('confirmed')?.value === false ? 'bg-red-500/40 text-dsurface/100' : ''"
                                     class="w-full px-4 py-2 text-sm font-semibold text-dsurface/70 rounded-full border transition-colors duration-200"
-                                    [disabled]="isDeadlinePassed()">
+                                    [disabled]="isDeadlinePassed() || isLoading || submitSuccess">
                                     Não
                                 </button>
                             </div>
@@ -66,8 +73,9 @@
                     
                     <button type="submit" 
                             class="w-full bg-dprimary text-white font-secondary py-2 px-4 rounded-md hover:bg-dprimary/90 transition-colors duration-200 disabled:bg-dsecondary/50 disabled:cursor-not-allowed"
-                            [disabled]="!confirmationForm.valid || !isFormEnabled">
-                        Confirmar
+                            [disabled]="!confirmationForm.valid || !isFormEnabled || isLoading || submitSuccess">
+                        <span *ngIf="!isLoading; else loadingSubmit">Confirmar</span>
+                        <ng-template #loadingSubmit>Enviando...</ng-template>
                     </button>
                 </form>
             </ng-template>
