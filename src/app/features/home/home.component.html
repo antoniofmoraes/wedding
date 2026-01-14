@@ -158,7 +158,7 @@
                         </div>
                         <a 
                             class="w-fit bg-dprimary text-white font-secondary py-3 px-6 rounded-full hover:bg-dprimary/90 transition-all duration-200 hover:scale-105"
-                            href="#" 
+                            href="https://lista.havan.com.br/Convidado/ItensListaPresente/894432" 
                             target="_blank" 
                             rel="noopener noreferrer">
                             acessar lista
@@ -176,7 +176,7 @@
                         </div>
                         <a 
                             class="w-fit text-sm bg-dprimary text-white font-secondary py-3 px-6 rounded-full hover:bg-dprimary/90 transition-all duration-200 hover:scale-105"
-                            href="#" 
+                            href="https://lista.camicado.com.br/antonioetayna" 
                             target="_blank" 
                             rel="noopener noreferrer">
                             acessar lista
@@ -195,10 +195,12 @@
                 <div class="mx-auto mt-6 h-px w-32 bg-dprimary/40"></div>
             </div>
 
-            <!-- Grid de Fotos - Layout Assimétrico Dinâmico -->
+            <!-- Grid de Fotos -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 @for (photo of photos; track photo.url) {
-                    <div [class]="getLayoutClasses(photo.layout) + ' group relative overflow-hidden bg-gradient-to-br from-dprimary/10 to-dsecondary/10'">
+                    <div 
+                        class="col-span-1 row-span-1 rounded-2xl aspect-square group relative overflow-hidden bg-gradient-to-br from-dprimary/10 to-dsecondary/10 cursor-pointer"
+                        (click)="openPhoto(photo)">
                         <img 
                             [src]="photo.url" 
                             [alt]="photo.alt"
@@ -211,6 +213,53 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal de Foto -->
+    @if (selectedPhoto) {
+        <div 
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+            (click)="closePhoto()"
+            (touchstart)="onTouchStart($event)"
+            (touchend)="onTouchEnd($event)">
+            <button 
+                class="absolute top-4 right-4 text-white hover:text-dprimary transition-colors duration-200 z-20"
+                (click)="closePhoto()"
+                aria-label="Fechar">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <!-- Botão Anterior -->
+            <button 
+                *ngIf="selectedPhotoIndex > 0"
+                class="absolute left-4 bottom-8 md:bottom-auto md:top-1/2 md:-translate-y-1/2 text-white hover:text-dprimary transition-colors duration-200 z-20 bg-black/70 rounded-full p-2 md:p-3 hover:bg-black/90"
+                (click)="previousPhoto(); $event.stopPropagation()"
+                aria-label="Foto anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 md:w-8 md:h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            
+            <!-- Botão Próxima -->
+            <button 
+                *ngIf="selectedPhotoIndex < photos.length - 1"
+                class="absolute right-4 bottom-8 md:bottom-auto md:top-1/2 md:-translate-y-1/2 text-white hover:text-dprimary transition-colors duration-200 z-20 bg-black/70 rounded-full p-2 md:p-3 hover:bg-black/90"
+                (click)="nextPhoto(); $event.stopPropagation()"
+                aria-label="Próxima foto">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 md:w-8 md:h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+            
+            <img 
+                [src]="selectedPhoto.url" 
+                [alt]="selectedPhoto.alt"
+                class="max-w-full max-h-[90vh] object-contain rounded-lg z-10"
+                (click)="$event.stopPropagation()"
+            />
+        </div>
+    }
 
     <section class="bg-dsurface text-dtextc py-20 px-4">
         <div class="max-w-4xl mx-auto">
@@ -228,6 +277,27 @@
                 <p>
                     Hoje, o que começou com passos tímidos e encontros espaçados está prestes a ganhar um novo capítulo. Um capítulo que queremos viver ao lado das pessoas mais importantes para nós.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative py-20 px-4 bg-surface">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-4">
+                <h2 class="text-4xl font-primary text-dprimary">Perguntas Frequentes</h2>
+                <div class="mx-auto mt-4 h-px w-24 bg-dprimary/40"></div>
+            </div>
+            <p class="text-center text-dsurface/70 font-secondary normal-case mb-12 text-sm">
+                Aqui estão respostas para dúvidas frequentes. Caso tenha uma dúvida que não está aqui, sinta-se a vontade pra falar conosco no whatsapp. 
+            </p>
+
+            <div class="space-y-4">
+                @for (faq of faqs; track faq.pergunta) {
+                    <div class="rounded-2xl border border-dprimary/20 bg-white backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-dprimary/30 transition-all duration-200">
+                        <h3 class="text-xl font-secondary text-dprimary mb-3">{{ faq.pergunta }}</h3>
+                        <p class="text-base font-secondary normal-case text-dsurface/90 leading-relaxed">{{ faq.resposta }}</p>
+                    </div>
+                }
             </div>
         </div>
     </section>

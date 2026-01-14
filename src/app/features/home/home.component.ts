@@ -5,7 +5,11 @@ import { CommonModule } from '@angular/common';
 interface GalleryPhoto {
   url: string;
   alt: string;
-  layout: 'large' | 'medium' | 'horizontal' | 'vertical';
+}
+
+interface FAQ {
+  pergunta: string;
+  resposta: string;
 }
 
 @Component({
@@ -17,36 +21,86 @@ interface GalleryPhoto {
 })
 export class HomeComponent implements OnInit {
   photos: GalleryPhoto[] = [];
+  selectedPhoto: GalleryPhoto | null = null;
+  selectedPhotoIndex: number = -1;
+  private touchStartX: number = 0;
+  private touchEndX: number = 0;
+  faqs: FAQ[] = [
+    {
+      pergunta: 'Como confirmo minha presença?',
+      resposta: 'Você receberá orientações para confirmação por whatsapp. Caso ainda não tenha recebido até o dia 20/01, nos contate pelo whatsapp.'
+    },
+    {
+      pergunta: 'Crianças estão convidadas?',
+      resposta: 'Com certeza! E elas deverão ser incluídas na confirmação de presença.'
+    },
+    {
+      pergunta: 'Haverá espaço para crianças?',
+      resposta: 'A chácara conta com parquinho para crianças, além de amplo espaço externo, dando bastante espaço para as crianças brincarem.'
+    }
+  ];
 
   ngOnInit() {
     this.loadGalleryPhotos();
   }
 
   private loadGalleryPhotos() {
-    // Quantidade de fotos disponíveis na pasta
-    const photoCount = 10;
-    const layouts: ('large' | 'medium' | 'horizontal' | 'vertical')[] = [
-      'large', 'medium', 'medium', 'horizontal', 
-      'medium', 'medium', 'vertical', 'medium'
-    ];
+    const photoCount = 12;
 
     for (let i = 1; i <= photoCount; i++) {
       const photoNumber = i.toString().padStart(3, '0');
       this.photos.push({
-        url: `/img/prewedding/Web-${photoNumber}.jpg`,
-        alt: `Foto ${i} - Pré-wedding Tayná & Antonio`,
-        layout: layouts[(i - 1) % layouts.length] || 'medium'
+        url: `/img/prewedding/${photoNumber}.jpeg`,
+        alt: `Foto ${i} - Pré-wedding Tayná & Antonio`
       });
     }
   }
 
-  getLayoutClasses(layout: string): string {
-    const layoutMap: { [key: string]: string } = {
-      'large': 'col-span-2 row-span-2 rounded-3xl aspect-square',
-      'medium': 'col-span-1 row-span-1 rounded-2xl aspect-square',
-      'horizontal': 'col-span-2 row-span-1 rounded-3xl aspect-[2/1]',
-      'vertical': 'col-span-1 row-span-2 rounded-3xl aspect-[1/2]'
-    };
-    return layoutMap[layout] || layoutMap['medium'];
+  openPhoto(photo: GalleryPhoto) {
+    this.selectedPhoto = photo;
+    this.selectedPhotoIndex = this.photos.indexOf(photo);
+  }
+
+  closePhoto() {
+    this.selectedPhoto = null;
+    this.selectedPhotoIndex = -1;
+  }
+
+  nextPhoto() {
+    if (this.selectedPhotoIndex < this.photos.length - 1) {
+      this.selectedPhotoIndex++;
+      this.selectedPhoto = this.photos[this.selectedPhotoIndex];
+    }
+  }
+
+  previousPhoto() {
+    if (this.selectedPhotoIndex > 0) {
+      this.selectedPhotoIndex--;
+      this.selectedPhoto = this.photos[this.selectedPhotoIndex];
+    }
+  }
+
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  private handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = this.touchStartX - this.touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swipe left - next photo
+        this.nextPhoto();
+      } else {
+        // Swipe right - previous photo
+        this.previousPhoto();
+      }
+    }
   }
 }
