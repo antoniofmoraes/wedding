@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 
 interface GuestInfo {
@@ -17,7 +17,7 @@ interface GuestInfo {
   templateUrl: './confirmation.component.html',
   styles: [],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, HeaderComponent]
 })
 export class ConfirmationComponent implements OnInit {
   invitePublicId: string = '';
@@ -71,12 +71,16 @@ export class ConfirmationComponent implements OnInit {
         guests.forEach(guest => {
           const guestGroup = this.fb.group({
             publicId: [guest.publicId],
-            name: [guest.name],
+            name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
             isChild: [guest.isChild],
             age: [guest.age],
             attending: [guest.attending ?? false]
           });
           this.guests.push(guestGroup);
+          const nameControl = guestGroup.get('name');
+          if (nameControl?.invalid) {
+            nameControl.markAsTouched();
+          }
         });
         return;
       }
@@ -103,12 +107,16 @@ export class ConfirmationComponent implements OnInit {
       guests.forEach(guest => {
         const guestGroup = this.fb.group({
           publicId: [guest.publicId],
-          name: [guest.name],
+          name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
           isChild: [guest.isChild],
           age: [guest.age],
           attending: [guest.attending ?? false]
         });
         this.guests.push(guestGroup);
+        const nameControl = guestGroup.get('name');
+        if (nameControl?.invalid) {
+          nameControl.markAsTouched();
+        }
       });
     } catch (err: any) {
       console.error(err);
