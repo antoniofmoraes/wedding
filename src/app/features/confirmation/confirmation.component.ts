@@ -5,10 +5,11 @@ import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular
 import { HeaderComponent } from '../../shared/components/header/header.component';
 
 interface GuestInfo {
+  publicId: string;
   name: string;
   isChild: boolean;
   age?: number;
-  confirmed: boolean;
+  attending: boolean;
 }
 
 @Component({
@@ -19,17 +20,18 @@ interface GuestInfo {
   imports: [CommonModule, ReactiveFormsModule, HeaderComponent]
 })
 export class ConfirmationComponent implements OnInit {
-  token: string = '';
+  invitePublicId: string = '';
   confirmationForm: FormGroup;
   isFormEnabled: boolean = true;
-  deadlineDate = new Date('2025-10-31');
+  deadlineDate = new Date('2026-02-31');
   isLoading = false;
   loadError: string | null = null;
   submitError: string | null = null;
   submitSuccess: boolean = false;
 
   // Base URL of the API (adjust if needed or move to environment file)
-  private readonly apiBase = 'http://xsco44swgggs4csckkk04g0w.69.62.91.165.sslip.io:3003';
+  private readonly apiBase = 'https://www.rsvp.ivanaga.cloud/api';
+  private readonly useMockData = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +43,7 @@ export class ConfirmationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.token = this.route.snapshot.params['confirmation_token'];
+    this.invitePublicId = this.route.snapshot.params['confirmation_token'];
     this.loadFamilyData();
   }
 
@@ -49,19 +51,37 @@ export class ConfirmationComponent implements OnInit {
     return this.confirmationForm.get('guests') as FormArray;
   }
 
-  updateGuestConfirmation(index: number, confirmed: boolean) {
+  updateGuestConfirmation(index: number, attending: boolean) {
     if (this.isDeadlinePassed()) return;
     
     const guest = this.guests.at(index);
-    guest.patchValue({ confirmed });
+    guest.patchValue({ attending });
   }
 
   private async loadFamilyData(): Promise<void> {
     this.isLoading = true;
     this.loadError = null;
     try {
+      if (this.useMockData) {
+        const guests: GuestInfo[] = [
+          { publicId: 'QuHeP', name: 'João da Silva', isChild: false, attending: true },
+          { publicId: 'QuHeq', name: 'Maria da Silva', isChild: false, attending: false },
+          { publicId: 'QuHer', name: 'Pedro da Silva', isChild: true, age: 7, attending: true }
+        ];
+        guests.forEach(guest => {
+          const guestGroup = this.fb.group({
+            publicId: [guest.publicId],
+            name: [guest.name],
+            isChild: [guest.isChild],
+            age: [guest.age],
+            attending: [guest.attending ?? false]
+          });
+          this.guests.push(guestGroup);
+        });
+        return;
+      }
       // Assumed endpoint pattern. Adjust to match real API once confirmed.
-      const url = `${this.apiBase}/confirmation/${encodeURIComponent(this.token)}`;
+      const url = `${this.apiBase}/invites/${encodeURIComponent(this.invitePublicId)}`;
       const res = await fetch(url, {
         method: 'GET',
         headers: {
@@ -69,20 +89,24 @@ export class ConfirmationComponent implements OnInit {
         }
       });
       if (!res.ok) {
-        throw new Error(`Erro ao carregar dados (status ${res.status})`);
+        if (res.status === 404) {
+          throw new Error('Link inválido, verifique se copiou corretamente e tente novamente. Caso o erro persista, fale conosco pelo whatsapp.');
+        }
+        throw new Error(`Erro ao carregar dados (status ${res.status}). Tente novamente mais tarde, se o erro persistir, fale conosco pelo whatsapp e se possível nos mande o print da tela.`);
       }
       const data = await res.json();
-      // Expecting shape: { guests: [{ name, isChild, age?, confirmed? }] }
-      const guests: GuestInfo[] = Array.isArray(data?.guests) ? data.guests : [];
+      // Expecting shape: { invite: { guests: [{ name, isChild, age?, confirmed? | attending? }] } }
+      const guests: GuestInfo[] = Array.isArray(data?.invite?.guests) ? data.invite.guests : [];
       if (!guests.length) {
         this.loadError = 'Nenhum convidado encontrado para este token.';
       }
       guests.forEach(guest => {
         const guestGroup = this.fb.group({
+          publicId: [guest.publicId],
           name: [guest.name],
           isChild: [guest.isChild],
           age: [guest.age],
-          confirmed: [guest.confirmed ?? false]
+          attending: [guest.attending ?? false]
         });
         this.guests.push(guestGroup);
       });
@@ -100,15 +124,24 @@ export class ConfirmationComponent implements OnInit {
     this.submitSuccess = false;
     try {
       const payload = {
-        token: this.token,
-        guests: this.guests.value.map((g: any) => ({
-          name: g.name,
-          confirmed: g.confirmed,
-          isChild: g.isChild,
-          age: g.age
-        }))
-      };
-      const url = `${this.apiBase}/confirmation/${encodeURIComponent(this.token)}`;
+        publicId: this.invitePublicId,
+        guests: this.guests.value.map((g: any) => {
+          const guestPayload = {
+            publicId: g.publicId,
+            name: g.name,
+            attending: g.attending,
+            isChild: g.isChild,
+          }
+
+          if (g.age !== null && g.age !== undefined) {
+            //@ts-ignore 
+            guestPayload['age'] = g.age;
+          }
+
+          return guestPayload;
+        }
+      )};
+      const url = `${this.apiBase}/invites/rsvp`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
