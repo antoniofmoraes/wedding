@@ -6,7 +6,8 @@
             <p class="text-center text-sm text-dsurface/80 mb-6">
                 Preencha nome e sobrenome de cada convidado e 
                 <br/>selecione “Sim” ou “Não” para confirmar a presença.
-                <br/>Para crianças, informe a idade.
+                <br/>Para crianças, coloque a idade.
+                <br/>O prazo para confirmação é até <b>{{ deadlineDate | date:'dd/MM/yyyy' }}</b>.
             </p>
 
             <div *ngIf="submitSuccess" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 animate-[fadeIn_200ms_ease-out]">

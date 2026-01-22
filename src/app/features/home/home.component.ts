@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   faqs: FAQ[] = [
     {
       pergunta: 'Como confirmo minha presença?',
-      resposta: 'Você receberá orientações para confirmação por whatsapp. Caso ainda não tenha recebido até o dia 20/01, nos contate pelo whatsapp.'
+      resposta: 'Você receberá orientações para confirmação por whatsapp. Caso ainda não tenha recebido até o dia 23/01, nos contate pelo whatsapp.'
     },
     {
       pergunta: 'Crianças estão convidadas?',
