@@ -37,7 +37,11 @@ export class HomeComponent implements OnInit {
     {
       pergunta: 'Haverá espaço para crianças?',
       resposta: 'A chácara conta com parquinho para crianças, além de amplo espaço externo, dando bastante espaço para as crianças brincarem.'
-    }
+    },
+    {
+      pergunta: 'Posso usar qualquer cor?',
+      resposta: 'Para manter a harmonia da nossa cerimônia, as madrinhas usarão vestidos no tom fúcsia e os padrinhos estarão de terno cinza claro. Por isso, pedimos com carinho que os convidados evitem esses tons em seus trajes. Agradecemos muito a compreensão e o carinho!'
+    },
   ];
 
   ngOnInit() {
