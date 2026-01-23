@@ -9,7 +9,7 @@ interface GuestInfo {
   name: string;
   isChild: boolean;
   age?: number;
-  attending: boolean;
+  attending: boolean | null;
 }
 
 @Component({
@@ -19,6 +19,7 @@ interface GuestInfo {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule, HeaderComponent]
 })
+
 export class ConfirmationComponent implements OnInit {
   invitePublicId: string = '';
   confirmationForm: FormGroup;
@@ -74,7 +75,7 @@ export class ConfirmationComponent implements OnInit {
             name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
             isChild: [guest.isChild],
             age: [guest.age],
-            attending: [guest.attending ?? false]
+            attending: [guest.attending ?? null]
           });
           this.guests.push(guestGroup);
           const nameControl = guestGroup.get('name');
@@ -110,7 +111,7 @@ export class ConfirmationComponent implements OnInit {
           name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
           isChild: [guest.isChild],
           age: [guest.age],
-          attending: [guest.attending ?? false]
+          attending: [guest.attending ?? null]
         });
         this.guests.push(guestGroup);
         const nameControl = guestGroup.get('name');
