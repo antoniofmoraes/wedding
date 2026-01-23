@@ -1,46 +1,267 @@
-<div class="min-h-screen flex flex-col uppercase bg-surface overflow-x-hidden">
-    <main class="flex flex-col items-center justify-between min-h-screen">
-        <header class="fixed top-0 left-0 right-0 z-[10vh] bg-dsurface/100 backdrop-blur-sm flex items-center justify-between whitespace-nowrap px-6 py-3">
-            <div class="w-full">
-                <h1 class="font-primary text-dprimary text-center text-4xl md:text-5xl">T&A</h1>
-            </div>
-        </header>
-        <div class="flex flex-col flex-1 mt-[10vh] mx-4 px-4">
-            <div class="flex-auto flex flex-col gap-6 md:flex-row md:gap-16 lg:gap-24 items-center justify-center w-full max-w-7xl">
-                <div class="flex flex-col text-center md:text-start md:w-1/3">
-                    <div class="font-primary whitespace-nowrap text-dprimary text-6xl md:text-9xl">
-                        <h1>
-                            Save <br class="hidden md:inline">
-                            the <br class="hidden md:inline">
-                            Date
-                        </h1>
-                    </div>
-                    <h2 class="text-textc text-xl md:text-3xl font-secondary">8 mar 2026</h2>
-                    <p class="text-textc whitespace-nowrap text-sm font-secondary hidden pt-4 md:block">
-                        Contamos com sua presença!
-                    </p>
-                </div>
-                <div class="flex justify-center md:w-2/3 md:flex-auto">
-                    <img src="img/noivado1.jpg" class="rounded-t-full shadow-lg max-h-[50vh] object-cover aspect-[3/4]" style="filter: none;">
-                </div>
-                <div class="md:hidden">
-                    <p class="text-textc text-center whitespace-nowrap text-sm font-secondary">
-                        Contamos com sua presença!
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-col-reverse items-center w-full text-textc mb-[5vh]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
-            <p class="text-center whitespace-nowrap text-[0.8em] font-secondary pt-6">
-                Nossa história
-            </p>
-        </div>
-    </main>
+<div class="min-h-screen flex flex-col uppercase bg-surface overflow-x-hidden relative">
+    <div class="absolute inset-0 bg-cover bg-center blur-xl -z-10"></div>
 
-    <section class="min-h-screen bg-dsurface text-dtextc py-20 px-4">
+    <div class="bg-[url(/img/pre1.jpg)] bg-cover bg-center back"> 
+        <main class="flex flex-col items-center justify-between min-h-screen backdrop-blur-xs">
+            <app-header />
+            <div class="flex flex-col flex-1 mt-[10vh] w-full">
+                <div class="flex-auto flex flex-col gap-6 md:flex-row md:gap-16 lg:gap-24 items-center justify-center w-full">
+                    <div class="flex flex-col text-center text-primary w-full backdrop-blur-sm py-4 px-4 gap-4">
+                        <h1 class="text-xl md:text-3xl font-secondary">vamos casar!</h1>
+                        <h1 class="text-5xl md:text-6xl font-primary">Tayná & Antonio</h1>
+                        <h2 class="text-xl md:text-3xl font-secondary">08.03.2026</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col-reverse items-center w-full text-primary mb-[5vh] backdrop-blur-xs">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+            </div>
+        </main>
+    </div>
+
+    <section class="relative py-16 gap-8">
+        <!-- Data e Traje -->
+        <div class="max-w-6xl mx-auto p-4 pb-12 text-dsurface">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-primary text-dprimary">Informações</h2>
+                <div class="mx-auto mt-4 h-px w-24 bg-dprimary/40"></div>
+            </div>
+
+            <div class="rounded-2xl border border-dprimary/20 bg-surface/70 backdrop-blur-sm p-8 md:p-12">
+                <div class="grid gap-10 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
+                    <div class="flex flex-col justify-center gap-3 md:text-end">
+                        <p class="text-xs font-secondary tracking-widest text-dsurface/60 normal-case">Quando</p>
+                        <h3 class="text-2xl md:text-3xl font-secondary"> 8 de Março, 2026</h3>
+                        <p class="text-base md:text-lg font-secondary normal-case text-dsurface/80">Domingo. Início às 11h</p>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="hidden md:block w-px self-stretch bg-gradient-to-b from-transparent via-dprimary/30 to-transparent"></div>
+                    <div class="md:hidden h-px w-full bg-gradient-to-r from-transparent via-dprimary/30 to-transparent"></div>
+
+                    <div class="flex flex-col justify-center gap-3">
+                        <p class="text-xs font-secondary tracking-widest text-dsurface/60 normal-case">Como</p>
+                        <h3 class="text-2xl md:text-3xl font-secondary">Traje</h3>
+                        <p class="text-base md:text-lg font-secondary normal-case text-dsurface/80">Esporte fino (almoço/tarde).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Localizações -->
+        <div class="max-w-6xl mx-auto p-4 text-dsurface">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-primary text-dprimary">Localizações</h2>
+                <div class="mx-auto mt-4 h-px w-24 bg-dprimary/40"></div>
+            </div>
+
+            <div class="rounded-2xl border border-dprimary/20 bg-surface/70 backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row gap-5">
+                <!-- Cerimônia -->
+                <div class="flex-1">
+                    <div class="flex flex-col gap-3 md:text-end">
+                        <h3 class="text-2xl md:text-3xl font-secondary">Cerimônia</h3>
+                        <p class="text-base font-secondary normal-case text-dsurface/80">Paróquia Nossa Senhora Auxiliadora<br>R. Arapongas, 1399 - Sítio Cercado, Curitiba - PR</p>
+                    </div>
+
+                    <div class="rounded-xl overflow-hidden aspect-video w-full border border-dprimary/20">
+                        <iframe 
+                            title="Mapa Cerimônia" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3599.9351725965616!2d-49.28395792282518!3d-25.540536237277923!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcfb863b3fcb4b%3A0xc9b933f2e85d5bf4!2sPar%C3%B3quia%20Nossa%20Senhora%20Auxiliadora!5e0!3m2!1sen!2sbr!4v1762469355257!5m2!1sen!2sbr" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+
+                    <div class="mt-auto flex flex-row gap-3">
+                        <a 
+                            class="flex-1 text-center bg-dprimary text-white font-secondary py-2 px-4 rounded-full hover:bg-dprimary/90 transition-colors duration-200"
+                            href="https://maps.app.goo.gl/cFuM61Ws7hJoWkY16" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                            Google Maps
+                        </a>
+                        <a 
+                            class="flex-1 text-center bg-dsecondary text-dtextc font-secondary py-2 px-4 rounded-full hover:bg-dsecondary/90 transition-colors duration-200"
+                            href="https://waze.com/ul/h6gkyww6rs" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                            Waze
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="hidden md:block w-px self-stretch bg-gradient-to-b from-transparent via-dprimary/30 to-transparent"></div>
+                <div class="md:hidden h-px w-full bg-gradient-to-r from-transparent via-dprimary/30 to-transparent"></div>
+
+                <!-- Festa -->
+                <div class="flex-1">
+                    <div class="flex flex-col gap-3">
+                        <h3 class="text-2xl md:text-3xl font-secondary">Festa</h3>
+                        <p class="text-base font-secondary normal-case text-dsurface/80">Chácara Encanto das Areias<br>R. José Júlio Tortato, 20 - Campo de Santana, Curitiba - PR</p>
+                    </div>
+
+                    <div class="rounded-xl overflow-hidden aspect-video w-full border border-dprimary/20">
+                        <iframe 
+                            title="Mapa Festa" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3597.9854268450595!2d-49.313507699999995!3d-25.6054005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcfef32dc167d9%3A0xdbc9403d2792144f!2sCh%C3%A1cara%20Encanto%20das%20Areias!5e0!3m2!1sen!2sbr!4v1762469525041!5m2!1sen!2sbr" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+
+                    <div class="mt-auto flex flex-row gap-3">
+                        <a 
+                            class="flex-1 text-center bg-dprimary text-white font-secondary py-2 px-4 rounded-full hover:bg-dprimary/90 transition-colors duration-200"
+                            href="https://www.google.com/maps/search/?api=1&query=Chácara+Encanto+das+Areias+Curitiba+PR" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                            Google Maps
+                        </a>
+                        <a 
+                            class="flex-1 text-center bg-dsecondary text-dtextc font-secondary py-2 px-4 rounded-full hover:bg-dsecondary/90 transition-colors duration-200"
+                            href="https://waze.com/ul/h6gkymfd8x" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                            Waze
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-dsurface text-dtextc py-20 px-4">
+        <!-- Lista de Presentes -->
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-primary text-dprimary">Lista de Presentes</h2>
+                <div class="mx-auto mt-4 h-px w-24 bg-dprimary/40"></div>
+            </div>
+
+            <div class="grid gap-10 md:grid-cols-2 mb-16">
+                <!-- Havan -->
+                <div class="rounded-2xl p-4 border border-dprimary/30 bg-dsurface/50 backdrop-blur-sm flex flex-row items-center gap-6 hover:border-dprimary/50 transition-colors duration-200">
+                    <img src="/img/logos/havan.png" alt="Logo Havan" class="h-36 md:h-40 object-contain"/>
+                    <div class="flex-auto gap-4 h-full flex flex-col justify-center">
+                        <div>
+                            <h3 class="text-2xl md:text-3xl font-secondary mb-3 text-dtextc">Havan</h3>
+                            <p class="text-sm font-secondary normal-case text-dtextc/70">Confira nossa lista de presentes na Havan</p>
+                        </div>
+                        <a 
+                            class="w-fit bg-dprimary text-white font-secondary py-3 px-6 rounded-full hover:bg-dprimary/90 transition-all duration-200 hover:scale-105"
+                            href="https://lista.havan.com.br/Convidado/ItensListaPresente/894432" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                            acessar lista
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Camicado -->
+                 <div class="rounded-2xl p-4 border border-dprimary/30 bg-dsurface/50 backdrop-blur-sm flex flex-row items-center gap-6 hover:border-dprimary/50 transition-colors duration-200">
+                    <img src="/img/logos/camicado.png" alt="Logo Camicado" class="h-36 md:h-40 object-contain"/>
+                    <div class="flex-auto gap-4 h-full flex flex-col justify-center">
+                        <div>
+                            <h3 class="text-2xl md:text-3xl font-secondary mb-3 text-dtextc">Camicado</h3>
+                            <p class="text-sm font-secondary normal-case text-dtextc/70">Confira nossa lista de presentes na Camicado</p>
+                        </div>
+                        <a 
+                            class="w-fit text-sm bg-dprimary text-white font-secondary py-3 px-6 rounded-full hover:bg-dprimary/90 transition-all duration-200 hover:scale-105"
+                            href="https://lista.camicado.com.br/antonioetayna" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                            acessar lista
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative py-20 px-4 bg-surface">
+        <!-- Galeria de Fotos -->
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-primary text-dprimary mb-4">Galeria</h2>
+                <div class="mx-auto mt-6 h-px w-32 bg-dprimary/40"></div>
+            </div>
+
+            <!-- Grid de Fotos -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                @for (photo of photos; track photo.url) {
+                    <div 
+                        class="col-span-1 row-span-1 rounded-2xl aspect-square group relative overflow-hidden bg-gradient-to-br from-dprimary/10 to-dsecondary/10 cursor-pointer"
+                        (click)="openPhoto(photo)">
+                        <img 
+                            [src]="photo.url" 
+                            [alt]="photo.alt"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-dsurface/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Foto -->
+    @if (selectedPhoto) {
+        <div 
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+            (click)="closePhoto()"
+            (touchstart)="onTouchStart($event)"
+            (touchend)="onTouchEnd($event)">
+            <button 
+                class="absolute top-4 right-4 text-white hover:text-dprimary transition-colors duration-200 z-20"
+                (click)="closePhoto()"
+                aria-label="Fechar">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <!-- Botão Anterior -->
+            <button 
+                *ngIf="selectedPhotoIndex > 0"
+                class="absolute left-4 bottom-8 md:bottom-auto md:top-1/2 md:-translate-y-1/2 text-white hover:text-dprimary transition-colors duration-200 z-20 bg-black/70 rounded-full p-2 md:p-3 hover:bg-black/90"
+                (click)="previousPhoto(); $event.stopPropagation()"
+                aria-label="Foto anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 md:w-8 md:h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            
+            <!-- Botão Próxima -->
+            <button 
+                *ngIf="selectedPhotoIndex < photos.length - 1"
+                class="absolute right-4 bottom-8 md:bottom-auto md:top-1/2 md:-translate-y-1/2 text-white hover:text-dprimary transition-colors duration-200 z-20 bg-black/70 rounded-full p-2 md:p-3 hover:bg-black/90"
+                (click)="nextPhoto(); $event.stopPropagation()"
+                aria-label="Próxima foto">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 md:w-8 md:h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+            
+            <img 
+                [src]="selectedPhoto.url" 
+                [alt]="selectedPhoto.alt"
+                class="max-w-full max-h-[90vh] object-contain rounded-lg z-10"
+                (click)="$event.stopPropagation()"
+            />
+        </div>
+    }
+
+    <section class="bg-dsurface text-dtextc py-20 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl font-primary text-center mb-12 text-dprimary">Nossa História</h2>
             <div class="space-y-6 text-lg leading-relaxed normal-case">
@@ -59,4 +280,27 @@
             </div>
         </div>
     </section>
+
+    <section class="relative py-20 px-4 bg-surface">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-4">
+                <h2 class="text-4xl font-primary text-dprimary">Perguntas Frequentes</h2>
+                <div class="mx-auto mt-4 h-px w-24 bg-dprimary/40"></div>
+            </div>
+            <p class="text-center text-dsurface/70 font-secondary normal-case mb-12 text-sm">
+                Aqui estão respostas para dúvidas frequentes. Caso tenha uma dúvida que não está aqui, sinta-se a vontade pra falar conosco no whatsapp. 
+            </p>
+
+            <div class="space-y-4">
+                @for (faq of faqs; track faq.pergunta) {
+                    <div class="rounded-2xl border border-dprimary/20 bg-white backdrop-blur-sm p-6 shadow-sm hover:shadow-md hover:border-dprimary/30 transition-all duration-200">
+                        <h3 class="text-xl font-secondary text-dprimary mb-3">{{ faq.pergunta }}</h3>
+                        <p class="text-base font-secondary normal-case text-dsurface/90 leading-relaxed">{{ faq.resposta }}</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    
 </div>

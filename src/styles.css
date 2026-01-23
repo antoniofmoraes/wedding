@@ -3,7 +3,7 @@
 
 @theme {
     --font-primary: 'Soage', serif;
-    --font-secondary: 'Lexend Giga', sans-serif;
+    --font-secondary: 'Lora', serif;
     
     --color-primary: oklch(0.82 0.14 85.0);
     --color-secondary: oklch(0.72 0.10 140.0);
@@ -23,6 +23,38 @@
     src: url('./assets/fonts/Soage.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('./assets/fonts/Lora-VariableFont_wght.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('./assets/fonts/Lora-VariableFont_wght.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('./assets/fonts/Lora-VariableFont_wght.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('./assets/fonts/Lora-VariableFont_wght.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -48,8 +80,3 @@
     font-style: normal;
     font-display: swap;
 }
-
-/* 
-.font-primary {
-    font-family: var(--font-primary);
-} */
