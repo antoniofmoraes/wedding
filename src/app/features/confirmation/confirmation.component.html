@@ -85,6 +85,9 @@
                                     Não
                                 </button>
                             </div>
+                            <p *ngIf="guest.get('attending')?.invalid && (guest.get('attending')?.touched || submitAttempted)" class="mt-2 text-xs text-red-600">
+                                Selecione “Sim” ou “Não”.
+                            </p>
 
                             <hr 
                                 *ngIf="!last"

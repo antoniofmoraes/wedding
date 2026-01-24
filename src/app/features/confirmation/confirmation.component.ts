@@ -29,6 +29,7 @@ export class ConfirmationComponent implements OnInit {
   loadError: string | null = null;
   submitError: string | null = null;
   submitSuccess: boolean = false;
+  submitAttempted: boolean = false;
 
   // Base URL of the API (adjust if needed or move to environment file)
   private readonly apiBase = 'https://www.rsvp.ivanaga.cloud/api';
@@ -57,6 +58,7 @@ export class ConfirmationComponent implements OnInit {
     
     const guest = this.guests.at(index);
     guest.patchValue({ attending });
+    guest.get('attending')?.markAsTouched();
   }
 
   private async loadFamilyData(): Promise<void> {
@@ -75,7 +77,7 @@ export class ConfirmationComponent implements OnInit {
             name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
             isChild: [guest.isChild],
             age: [guest.age],
-            attending: [guest.attending ?? null]
+            attending: [guest.attending ?? null, [Validators.required]]
           });
           this.guests.push(guestGroup);
           const nameControl = guestGroup.get('name');
@@ -111,7 +113,7 @@ export class ConfirmationComponent implements OnInit {
           name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
           isChild: [guest.isChild],
           age: [guest.age],
-          attending: [guest.attending ?? null]
+          attending: [guest.attending ?? null, [Validators.required]]
         });
         this.guests.push(guestGroup);
         const nameControl = guestGroup.get('name');
@@ -128,7 +130,15 @@ export class ConfirmationComponent implements OnInit {
   }
 
   async onSubmit() {
-    if (!this.confirmationForm.valid || this.isDeadlinePassed()) return;
+    this.submitAttempted = true;
+    if (this.isDeadlinePassed()) return;
+    if (!this.confirmationForm.valid) {
+      this.submitError = 'Responda para todos os convidados.';
+      this.guests.controls.forEach(control => {
+        control.get('attending')?.markAsTouched();
+      });
+      return;
+    }
     this.submitError = null;
     this.submitSuccess = false;
     try {
