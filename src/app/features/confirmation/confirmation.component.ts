@@ -76,7 +76,7 @@ export class ConfirmationComponent implements OnInit {
             publicId: [guest.publicId],
             name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
             isChild: [guest.isChild],
-            age: [guest.age],
+            age: [guest.age, guest.isChild ? [Validators.required, Validators.min(0)] : []],
             attending: [guest.attending ?? null, [Validators.required]]
           });
           this.guests.push(guestGroup);
@@ -112,7 +112,7 @@ export class ConfirmationComponent implements OnInit {
           publicId: [guest.publicId],
           name: [guest.name, [Validators.required, Validators.pattern(/\S+\s+\S+/)]],
           isChild: [guest.isChild],
-          age: [guest.age],
+          age: [guest.age, guest.isChild ? [Validators.required, Validators.min(0)] : []],
           attending: [guest.attending ?? null, [Validators.required]]
         });
         this.guests.push(guestGroup);
