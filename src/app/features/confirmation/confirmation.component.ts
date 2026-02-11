@@ -24,7 +24,7 @@ export class ConfirmationComponent implements OnInit {
   invitePublicId: string = '';
   confirmationForm: FormGroup;
   isFormEnabled: boolean = true;
-  deadlineDate = new Date('2026-02-10T23:59:59');
+  deadlineDate = new Date('2026-02-13T23:59:59');
   isLoading = false;
   loadError: string | null = null;
   submitError: string | null = null;
