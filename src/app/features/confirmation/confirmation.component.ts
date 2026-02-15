@@ -24,7 +24,7 @@ export class ConfirmationComponent implements OnInit {
   invitePublicId: string = '';
   confirmationForm: FormGroup;
   isFormEnabled: boolean = true;
-  deadlineDate = new Date('2026-02-10T23:59:59');
+  deadlineDate: Date | null = null;
   isLoading = false;
   loadError: string | null = null;
   submitError: string | null = null;
@@ -102,10 +102,14 @@ export class ConfirmationComponent implements OnInit {
         throw new Error(`Erro ao carregar dados (status ${res.status}). Tente novamente mais tarde, se o erro persistir, fale conosco pelo whatsapp e se possível nos mande o print da tela.`);
       }
       const data = await res.json();
-      // Expecting shape: { invite: { guests: [{ name, isChild, age?, confirmed? | attending? }] } }
+      // Expecting shape: { invite: { guests: [{ name, isChild, age?, confirmed? | attending? }], deadline } }
       const guests: GuestInfo[] = Array.isArray(data?.invite?.guests) ? data.invite.guests : [];
       if (!guests.length) {
         this.loadError = 'Nenhum convidado encontrado para este token.';
+      }
+      // Set deadline from API response
+      if (data?.invite?.deadline) {
+        this.deadlineDate = new Date(data.invite.deadline);
       }
       guests.forEach(guest => {
         const guestGroup = this.fb.group({
@@ -183,6 +187,6 @@ export class ConfirmationComponent implements OnInit {
   }
 
   isDeadlinePassed(): boolean {
-    return new Date() > this.deadlineDate;
+    return this.deadlineDate ? new Date() > this.deadlineDate : false;
   }
 }
